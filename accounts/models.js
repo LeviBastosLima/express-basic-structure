@@ -3,7 +3,6 @@ const mongodb = require('mongodb')
 const db = mongoose.connection
 const Scheme = mongoose.Schema
 
-
 mongoose.connect('mongodb://localhost/user', { useNewUrlParser: true});
 
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -17,10 +17,13 @@ router.post('/sucess-create', (req, res, next) =>{
 })
 
 router.get('/list-user', (req, res, next) => {
-    // console.log(mongodb.find({}, (err) => {
-    //     if (err) return handleError(err)
-    // }))
-    res.render('accountsView/list')
+    model.user.find({}, (err, users) => {
+        if (err) 
+            return handleError(err);
+
+        res.send(users);
+    })
+    //res.render('accountsView/list')
 })
 
 module.exports = router
