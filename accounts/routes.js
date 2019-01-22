@@ -21,9 +21,9 @@ router.get('/list-user', (req, res, next) => {
         if (err) 
             return handleError(err);
 
-        res.send(users);
+        res.render('accountsView/listUser', {users: users})
+        //res.send(users);
     })
-    //res.render('accountsView/list')
 })
 
 module.exports = router
