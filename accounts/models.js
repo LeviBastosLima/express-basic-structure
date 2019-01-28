@@ -15,6 +15,10 @@ const userScheme = new Scheme({
     surname: String
 })
 
+const dateScheme = new Scheme({
+    name: String
+})
+
 user = mongoose.model('User', userScheme)
 
 module.exports = { mongoose, user }
