@@ -4,11 +4,11 @@ const model = require('../models/userModel')
 
 
 router.get('/new-user', (req, res, next) => {
-    res.render('accountsView/create-form')
+    res.render('create-form')
 })
 
 router.post('/sucess-create', (req, res, next) =>{
-    model.user.create(req.body, function(err){
+    model.User.create(req.body, function(err){
         if (err) return handleError(err)
     })
     console.log(req.body)
@@ -16,13 +16,12 @@ router.post('/sucess-create', (req, res, next) =>{
 })
 
 router.get('/list-user', (req, res, next) => {
-    model.user.find({}, (err, users) => {
+    model.User.find({}, (err, users) => {
         if (err) 
             return handleError(err);
 
         res.send(users);
     })
-    //res.render('accountsView/list')
 })
 
 module.exports = router
