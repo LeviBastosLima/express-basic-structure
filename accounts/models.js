@@ -15,6 +15,6 @@ const userScheme = new Scheme({
     surname: String
 })
 
-user = mongoose.model('User', userScheme)
+peixe = mongoose.model('User', userScheme)
 
 module.exports = { mongoose, user }
