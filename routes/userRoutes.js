@@ -1,7 +1,6 @@
 const express = require('express')
-const mongodb = require('mongodb')
 const router = express.Router()
-const model = require('./models')
+const model = require('../models/userModel')
 
 
 router.get('/new-user', (req, res, next) => {
@@ -21,9 +20,10 @@ router.get('/list-user', (req, res, next) => {
         if (err) 
             return handleError(err);
 
-        res.render('accountsView/listUser', {users: users})
-        //res.send(users);
+        res.send(users);
     })
+    //res.render('accountsView/list')
 })
 
 module.exports = router
+
