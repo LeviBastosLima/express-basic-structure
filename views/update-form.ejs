@@ -5,26 +5,25 @@
     <title>My CRUD in NodeJS</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
-<div class="col-7 mx-auto jumbotron">
-    <form action="/accounts/sucess-create" method="POST" class="ml-3 centered">
-        <h2 class="text-center mb-5 font-weight-bold p-3 bg-primary text-white">Registrar</h2>
+<body><div class="col-7 mx-auto jumbotron">
+    <form action="/accounts/sucess-update/<%= user._id %>" method="POST" class="ml-3 centered">
+        <h2 class="text-center mb-5 font-weight-bold p-3 bg-primary text-white">Atualizar</h2>
         <div class="form-group row">
             <label for="inputName" class="col-sm-2 col-form-label text-secondary">Name</label>
             <div class="col-sm-8">
-                <input type="text" placeholder="Nome" name="name" id="inputName" class="form-control">
+                <input type="text" placeholder="Nome" name="name" id="inputName" class="form-control" value="<%= user.name %>">
             </div>
         </div>
         <div class="form-group row">
             <label for="inputSurname" class="col-sm-2 col-form-label text-secondary">Sobrenome</label>
             <div class="col-sm-8">
-                <input type="text" placeholder="Sobrenome" name="surname" id="inputSurname" class="form-control">
+                <input type="text" placeholder="Sobrenome" name="surname" id="inputSurname" class="form-control" value="<%= user.surname %>">
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-sm-3 mx-auto">
+            <div class="col-sm-4  mx-auto">
                 <a href="/accounts/list-user"><button type="button" class="btn btn-info mt-3 mr-3">Voltar</button></a>
-                <button type="submit" class="btn btn-success mt-3">Criar</button>
+                <button type="submit" class="btn btn-success mt-3">Atualizar</button>
             </div>
         </div>
     </form>
