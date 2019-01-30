@@ -1,21 +1,26 @@
 const mongoose = require('mongoose')
 const db = mongoose.connection
-const Scheme = mongoose.Schema
-
 
 // Connection with User DB
 mongoose.connect('mongodb://localhost/user', { useNewUrlParser: true});
+
 //Error treatment with callback
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', function() {
-    console.log('sucessful connection')
+    console.log('Connection Succesful')
 });
 
-const userScheme = new Scheme({
-    name: String,
-    surname: String
+const userSchema = new mongoose.Schema({
+    name: { 
+        type: String,
+        required: true
+    },
+    surname: {
+        type: String,
+        required: true
+    },
 })
 
-const User = mongoose.model('User', userScheme)
+const User = mongoose.model('User', userSchema)
 
 module.exports = { User }
