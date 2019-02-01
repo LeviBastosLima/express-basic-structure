@@ -8,10 +8,9 @@ router.get('/new-user', (req, res, next) => {
 
 router.post('/sucess-create', (req, res, next) =>{
     model.User.create(req.body, function(err){
-        if (err) return res.send(err)
+        if (err) return next(err)
         res.redirect('/accounts/list-user')
     })
-    //console.log(req.body)
 })
 
 router.get('/list-user', (req, res, next) => {
@@ -44,6 +43,11 @@ router.get('/delete-user/:id', (req, res) => {
                 <a href="http://localhost:3000/accounts/list-user">Voltar</a>`)
         }
     })
+})
+
+router.use((err, req, res, next) => {
+    res.status(500).render('error500', { erro : err._message, mensagem : err.message })
+    //console.log(err)
 })
 
 module.exports = router

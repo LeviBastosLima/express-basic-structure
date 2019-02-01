@@ -13,6 +13,9 @@ app.set('view engine', 'ejs')
 //Rotas exportadas
 const accountsRouter = require('./routes/userRoutes')
 
+//Definindo o local os arquivos estáticos
+app.use(express.static('public'))
+
 //Criando a rota de padrão de um diretório
 app.use('/accounts', accountsRouter)
 
