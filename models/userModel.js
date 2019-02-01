@@ -2,22 +2,26 @@ const mongoose = require('mongoose')
 const db = mongoose.connection
 
 // Connection with User DB
-mongoose.connect('mongodb://localhost/user', { useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/user', { useNewUrlParser: true, useFindAndModify: false });
 
 //Error treatment with callback
-db.on('error', console.error.bind(console, 'Connection error:'));
+db.on('error', (err) => {
+    console.log(err)
+});
 db.once('open', function() {
-    console.log('Connection Succesful')
+    console.log('MongoDB Connection Succesful')
 });
 
 const userSchema = new mongoose.Schema({
     name: { 
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     surname: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 })
 
