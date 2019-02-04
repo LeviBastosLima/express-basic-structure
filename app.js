@@ -12,13 +12,15 @@ app.set('view engine', 'ejs')
 
 //Rotas exportadas
 const accountsRouter = require('./routes/userRoutes')
-
-//Definindo o local os arquivos estáticos
-app.use(express.static('public'))
+const walletRouter = require('./routes/walletRoutes')
 
 //Criando a rota de padrão de um diretório
 app.use('/accounts', accountsRouter)
+app.use('/wallets', walletRouter)
 
-app.listen(3000, () => {
+//Definindo o local os arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.listen(port, () => {
     console.log(`Listening to port ${port}.`)
 })

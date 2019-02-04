@@ -12,6 +12,11 @@ db.once('open', function() {
     console.log('MongoDB Connection Succesful')
 });
 
+const walletSchema = new mongoose.Schema({
+    user_id: { type: String },
+    value: { type: Number, min:0 }
+})
+
 const userSchema = new mongoose.Schema({
     name: { 
         type: String,
@@ -22,9 +27,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    },
+    }
 })
 
-const User = mongoose.model('User', userSchema)
+const users = mongoose.model('User', userSchema)
+const wallets = mongoose.model('Wallet', walletSchema)
 
-module.exports = { User }
+module.exports = { users, wallets }
