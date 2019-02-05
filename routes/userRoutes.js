@@ -16,7 +16,7 @@ router.post('/sucess-create', (req, res, next) => {
 router.get('/list-user', (req, res, next) => {
     Model.users.find({}, (err, users) => {
         if (err) return next(err)
-        res.render('listUser', { users: users })
+        res.render('list-user', { users: users })
     })
 })
 
@@ -36,9 +36,7 @@ router.post('/sucess-update/:id', (req, res, next) => {
 
 router.get('/delete-user/:id', (req, res) => {
     Model.users.deleteOne({ _id: req.params.id }, (err) => {
-        if (err) {
-            return next(err)
-        }
+        if (err) return next(err)
         res.send(`O usuário de id: ${req.params.id} foi deletado! \n 
                 <a href="http://localhost:3000/accounts/list-user">Voltar</a>`)
 
@@ -50,6 +48,14 @@ router.get('/profile/:id', (req, res, next) =>{
         if (err) return next(err)
         res.render('profile-user', { user: users })
     })
+})
+
+router.get('/login', (req, res, next) => {
+    res.render('login-form') 
+})
+
+router.post('/success-login', (req, res, next) => {
+    //Programar autenticação
 })
 
 
