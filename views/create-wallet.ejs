@@ -9,7 +9,6 @@
     <p><%= user.name %> <%= user.surname %> está criando uma carteira</p>
     <form action="/wallets/sucess-create/<%= user._id %>" method="post">
         valor: <input type="number" name="value">
-        <input type="text" hidden name="user_id" value="<%= user._id %>">
         <button type="submit">Criar</button>
     </form>
 </body>
