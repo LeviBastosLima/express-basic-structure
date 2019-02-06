@@ -6,8 +6,15 @@
     <title>Profile</title>
 </head>
 <body>
-    <p><%= user.name %></p>
-    <p>Criar nova carteira</p>
-    <a href="/wallets/create/<%= user._id %>"><button type="button" class="btn btn-success">Criar</button></a>
+<p><%= user.name %></p>
+<p>Criar nova carteira</p>
+<a href="/wallets/create/<%- user._id %>"><button type="button" class="btn btn-success">Criar</button></a>
+<section>
+    <% let cont = 1 %>
+    <% wallet.forEach(wallets =>{  %>
+        <p>Carteira <%= cont++ %><br>
+            Valor: <%= wallets.value %></p>
+    <% }) %>
+</section>
 </body>
 </html>

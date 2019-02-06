@@ -12,11 +12,9 @@ router.get('/create/:id', (req, res, next) =>{
 })
 
 router.post('/sucess-create/:id', (req, res, next) =>{
-    Model.wallets.create(req.body, (err) => {
+    Model.wallets.create({ user_id: req.params.id, value: req.body.value } , (err) => {
         if (err) return next(err)
-        next()
-    }), Model.users.findById({ _id: req.params.id }, (err, users) =>{
-        res.redirect('/accounts/profile/' + users._id )
+        res.redirect('/accounts/profile/' + req.params.id )
     })
 })
 

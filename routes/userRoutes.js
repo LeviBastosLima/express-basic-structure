@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Model = require('../models/userModel')
 
+
 router.get('/new-user', (req, res, next) => {
     res.render('create-form')
 })
@@ -43,21 +44,26 @@ router.get('/delete-user/:id', (req, res) => {
     })
 })
 
-router.get('/profile/:id', (req, res, next) =>{
+router.get('/profile/:id', (req, res, next) => {
     Model.users.findById(req.params.id, (err, users) => {
         if (err) return next(err)
-        res.render('profile-user', { user: users })
+        Model.wallets.find({user_id: req.params.id}, (err, wallets) => {
+            console.log(wallets)
+            console.log(users)
+            if (err) return next(err)
+            res.render('profile-user', { user: users, wallet: wallets })
+        })
     })
 })
 
+
 router.get('/login', (req, res, next) => {
-    res.render('login-form') 
+    res.render('login-form')
 })
 
 router.post('/success-login', (req, res, next) => {
     //Programar autenticação
 })
-
 
 //Middleware para tratar erros
 router.use((err, req, res, next) => {
