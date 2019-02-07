@@ -39,7 +39,7 @@ router.get('/delete-user/:id', (req, res) => {
     Model.users.deleteOne({ _id: req.params.id }, (err) => {
         if (err) return next(err)
         res.send(`O usuário de id: ${req.params.id} foi deletado! \n 
-                <a href="http://localhost:3000/accounts/list-user">Voltar</a>`)
+                <a href="/accounts/list-user">Voltar</a>`)
 
     })
 })
@@ -48,14 +48,11 @@ router.get('/profile/:id', (req, res, next) => {
     Model.users.findById(req.params.id, (err, users) => {
         if (err) return next(err)
         Model.wallets.find({user_id: req.params.id}, (err, wallets) => {
-            console.log(wallets)
-            console.log(users)
             if (err) return next(err)
             res.render('profile-user', { user: users, wallet: wallets })
         })
     })
 })
-
 
 router.get('/login', (req, res, next) => {
     res.render('login-form')
@@ -67,8 +64,11 @@ router.post('/success-login', (req, res, next) => {
 
 //Middleware para tratar erros
 router.use((err, req, res, next) => {
-    res.status(500).render('error', { erro: err._message, mensagem: err.message })
-    //console.log(err)
+    if (!req.body.name || !req.body.surname) {
+        return res.status(500).render('error', { erro: 'Campos Vazios', mensagem: 'Você deve preencher todos os campos.' })
+    } else {
+        res.status(500).render('error', { erro: err._message, mensagem: err.message })
+    }
 })
 
 module.exports = router

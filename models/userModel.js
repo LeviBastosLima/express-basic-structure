@@ -13,8 +13,15 @@ db.once('open', function() {
 });
 
 const walletSchema = new mongoose.Schema({
-    user_id: { type: String },
-    value: { type: Number, min:0 }
+    user_id: { 
+        type: String ,
+        required: true
+    },
+    value: { 
+        type: Number, 
+        min:0,
+        required: true
+    }
 })
 
 const userSchema = new mongoose.Schema({
