@@ -1,15 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/userModel')
+const errors = require('../config/errors')
 
 
 router.get('/new-user', (req, res, next) => {
     res.render('create-form')
 })
 
-router.post('/sucess-create', (req, res, next) => {
+router.post('/success-create', (req, res, next) => {
     Model.users.create(req.body, function (err) {
-        if (err) return next(err)
+        if (!req.body.name || !req.body.surname) return next(errors.emptyFields)
+        else if (err) return next(err)
         res.redirect('/accounts/list-user')
     })
 })
@@ -28,9 +30,10 @@ router.get('/update-user/:id', (req, res, next) => {
     })
 })
 
-router.post('/sucess-update/:id', (req, res, next) => {
+router.post('/success-update/:id', (req, res, next) => {
     Model.users.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }, (err, raw) => {
-        if (err) return next(err)
+        if (!req.body.name || !req.body.surname) return next(errors.emptyFields)
+        else if (err) return next(err)
         res.redirect('/accounts/list-user')
     })
 })
@@ -47,7 +50,7 @@ router.get('/delete-user/:id', (req, res) => {
 router.get('/profile/:id', (req, res, next) => {
     Model.users.findById(req.params.id, (err, users) => {
         if (err) return next(err)
-        Model.wallets.find({user_id: req.params.id}, (err, wallets) => {
+        Model.wallets.find({ user_id: req.params.id }, (err, wallets) => {
             if (err) return next(err)
             res.render('profile-user', { user: users, wallet: wallets })
         })
@@ -59,16 +62,13 @@ router.get('/login', (req, res, next) => {
 })
 
 router.post('/success-login', (req, res, next) => {
-    //Programar autenticação
-})
-
-//Middleware para tratar erros
-router.use((err, req, res, next) => {
-    if (!req.body.name || !req.body.surname) {
-        return res.status(500).render('error', { erro: 'Campos Vazios', mensagem: 'Você deve preencher todos os campos.' })
-    } else {
-        res.status(500).render('error', { erro: err._message, mensagem: err.message })
-    }
+    Model.users.find(req.body, (err, users) => {
+        if ((!req.body.name) || (!req.body.surname)) {
+            return next(errors.emptyFields)
+        } else if (!users.length) {
+            return next(errors.invalidLogin)
+        }
+    })
 })
 
 module.exports = router

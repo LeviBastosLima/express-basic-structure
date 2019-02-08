@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../models/userModel')
+const errors = require('../config/errors')
 
 
 router.get('/create/:id', (req, res, next) =>{
@@ -10,20 +11,12 @@ router.get('/create/:id', (req, res, next) =>{
     })
 })
 
-router.post('/sucess-create/:id', (req, res, next) =>{
+router.post('/success-create/:id', (req, res, next) =>{
     Model.wallets.create({ user_id: req.params.id, value: req.body.value } , (err) => {
-        if (err) return next(err)
+        if (!req.body.name || !req.body.surname) return next(errors.emptyFields)
+        else if (err) return next(err)
         res.redirect('/accounts/profile/' + req.params.id )
     })
-})
-
-//Middleware para tratar erros
-router.use((err, req, res, next) => {
-    if (!req.body.value) {
-        return res.status(500).render('error', { erro: 'Campo Vazio', mensagem: 'O campo "valor" não foi preenchido.' })
-    } else {
-        res.status(500).render('error', { erro: err._message, mensagem: err.message })
-    }
 })
 
 module.exports = router

@@ -21,6 +21,18 @@ app.use('/wallets', walletRouter)
 //Definindo o local os arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')))
 
+//Middleware para tratar erros 400
+app.use(function (req, res, next) {
+    res.status(400)
+    res.render('error', { erro: err._message, mensagem: err.message })
+})
+
+//Middleware para tratar outros erros
+app.use((err, req, res, next) => {
+    res.status(err.status || 500)
+    res.render('error', { erro: err._message, mensagem: err.message })
+})
+
 app.listen(port, () => {
     console.log(`Listening to port ${port}.`)
 })
