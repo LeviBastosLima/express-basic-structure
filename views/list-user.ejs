@@ -22,7 +22,7 @@
     <tbody>
     <tr>
         <th scope="row"><%= cont++ %></th>
-        <td><a href="/accounts/profile/<%= user._id %>"><%= user.name %></a></td>
+        <td><%= user.name %></td>
         <td><%= user.surname %></td>
         <td><a href="/accounts/update-user/<%= user._id %>"><button type="button" class="btn btn-primary">Atualizar</button></a></td>
         <td><a href="/accounts/delete-user/<%= user._id %>"><button type="button" class="btn btn-danger">Deletar</button></a></td>

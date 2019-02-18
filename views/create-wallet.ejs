@@ -7,7 +7,7 @@
 </head>
 <body>
     <p><%= user.name %> <%= user.surname %> está criando uma carteira</p>
-    <form action="/wallets/success-create/<%= user._id %>" method="post">
+    <form action="/wallets/success-create" method="post">
         valor: <input type="number" name="value">
         <button type="submit">Criar</button>
     </form>
