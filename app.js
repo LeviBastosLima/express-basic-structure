@@ -2,14 +2,18 @@ const express = require('express')
 const expressSession = require('express-session')
 const app = express()
 const path = require('path')
-const bodyParser = require('body-parser')
 const port = process.env.port || 3000
+const mongoose = require('mongoose')
+const db = mongoose.connection
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
+// Definindo o local os arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(expressSession({
     name: 'user',
@@ -21,6 +25,17 @@ app.use(expressSession({
     },
     rolling: true,
 }))
+
+// Connection with User DB
+mongoose.connect('mongodb://localhost/basicStructure', { useNewUrlParser: true, useFindAndModify: false });
+
+//Error treatment with callback
+db.on('error', (err) => {
+    console.log(err)
+});
+db.once('open', function () {
+    console.log('MongoDB has been connected!')
+});
 
 // Rotas exportadas
 const accountsRouter = require('./routes/userRoutes')
@@ -38,9 +53,6 @@ app.use('*', (req, res, next) => {
 // Criando a rota de padrão de um diretório
 app.use('/accounts', accountsRouter)
 app.use('/wallets', walletRouter)
-
-// Definindo o local os arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')))
 
 // Middleware para tratar erros 400
 app.use(function (req, res, next) {

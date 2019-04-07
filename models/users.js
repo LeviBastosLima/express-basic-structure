@@ -1,30 +1,6 @@
 const mongoose = require('mongoose')
-const db = mongoose.connection
 const bcrypt = require('bcrypt')
 const saltRounds = 10
-
-// Connection with User DB
-mongoose.connect('mongodb://localhost/user', { useNewUrlParser: true, useFindAndModify: false });
-
-//Error treatment with callback
-db.on('error', (err) => {
-    console.log(err)
-});
-db.once('open', function () {
-    console.log('MongoDB Connection Succesful')
-});
-
-const walletSchema = new mongoose.Schema({
-    user_id: {
-        type: String,
-        required: true
-    },
-    value: {
-        type: Number,
-        min: 0,
-        required: true
-    }
-})
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -71,6 +47,5 @@ userSchema.methods.comparePassword = function(submittedPassword, callback) {
 } 
 
 const Users = mongoose.model('User', userSchema)
-const Wallets = mongoose.model('Wallet', walletSchema)
 
-module.exports = { Users, Wallets }
+module.exports =  Users
